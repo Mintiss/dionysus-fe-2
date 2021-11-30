@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import bgImage from './images/background.jpg'
+import { Link } from "react-router-dom";
+import NavigationBar from './components/NavigationBar';
+import { Outlet, useLocation } from 'react-router';
+import WelcomeScreen from './components/WelcomeScreen';
+
+const background = {
+  backgroundImage: `url(${bgImage})`,
+   backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
+    position: 'absolute',
+    left: "0",
+    overflow: 'auto'
+}
 
 function App() {
+  const location = useLocation()
+
+  if( location.state !== '') console.log(location.state)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={background}>
+      <NavigationBar />
+      {location.state == null && <WelcomeScreen />}
+      <Outlet />
     </div>
   );
 }

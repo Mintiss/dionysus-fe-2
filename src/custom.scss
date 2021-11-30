@@ -1,0 +1,18 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
+
+
+$baseFontFamily: 'Marcellus', sans-serif !default;
+
+$font: "https://fonts.googleapis.com/css2?family=Marcellus&display=swap" !default;
+$font-family-custom-sans-serif: "Marcellus", sans-serif !default;
+$font-family-base: $font-family-custom-sans-serif !default;
+
+$body-color: rgb(121, 182, 124);
+$body-bg: #212121;
+
+$theme-colors: (
+  "purple": purple
+);
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
