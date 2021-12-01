@@ -3,8 +3,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel"
 import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom";
 
-
-const Signup = () => {
+const Login = () => {
     const navigate = useNavigate()
 
     return (
@@ -14,17 +13,11 @@ const Signup = () => {
                 <Form.Control type="text" placeholder="" />
             </FloatingLabel>
 
-            <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-                <Form.Control type="email" placeholder="name@example.com" />
-            </FloatingLabel>
 
             <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
                 <Form.Control type="password" placeholder="Password" />
             </FloatingLabel>
 
-            <FloatingLabel controlId="floatingPassword" label="Repeat Password" className="mb-3">
-                <Form.Control type="password" placeholder="Repeat Password" />
-            </FloatingLabel>
             <div className='custom-checkbox shadow-lg bg-background pt-2 pb-2 rounded shadow w-25 m-auto border '>
                 {/* <Form.Check inline className='text-white' label='Remember me' /> */}
 
@@ -32,11 +25,11 @@ const Signup = () => {
 
                 <button onClick={() => {
                         navigate('/', { state: {loggedIn: true, menu:"main"} })
-                    }} className='btn text-white bg-purple m-1' >Register</button>
+                    }} className='btn text-white bg-purple m-1' >Login</button>
             </div>
 
         </Form>
     )
 }
 
-export default Signup
+export default Login

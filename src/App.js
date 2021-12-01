@@ -1,6 +1,5 @@
 import './App.css';
 import bgImage from './images/background.jpg'
-import { Link } from "react-router-dom";
 import NavigationBar from './components/NavigationBar';
 import { Outlet, useLocation } from 'react-router';
 import WelcomeScreen from './components/WelcomeScreen';
@@ -18,13 +17,14 @@ const background = {
 }
 
 function App() {
-  const location = useLocation()
+  const location = useLocation({})
 
-  if( location.state !== '') console.log(location.state)
+  console.log(location.state)
+
   return (
     <div className="App" style={background}>
       <NavigationBar />
-      {location.state == null && <WelcomeScreen />}
+      {(location.state == null || location.state.menu) && <WelcomeScreen />}
       <Outlet />
     </div>
   );
