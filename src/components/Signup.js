@@ -4,9 +4,11 @@ import FloatingLabel from "react-bootstrap/FloatingLabel"
 import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom";
 
-
+import {UserContext} from '../Contexts/UserContext';
 const Signup = () => {
     const navigate = useNavigate()
+
+    const {setUser} = useContext(UserContext);
 
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
@@ -21,6 +23,12 @@ const Signup = () => {
         console.log("Password", password);
         console.log("Repeated password", repeatedPassword);
         console.log("Email", email);
+        var newUser = {
+            username: username,
+            name: username,
+            token: 'pipi'
+        }
+        setUser(newUser);
         navigate('/', { state: {loggedIn: true, menu:"main"} });
     }
 
