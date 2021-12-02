@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {UserContext} from '../Contexts/UserContext';
 const NavigationBar = () => {
     const navigate = useNavigate()
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
     return (
         <Navbar bg="black" expand="lg" variant='dark'>
             <Container className='m-auto w-100'>
@@ -38,7 +38,7 @@ const NavigationBar = () => {
                     console.log('ass')
                 }}>Fuck Harry In The Ass</Nav.Link>
 
-                <span class="navbar-text">
+                <span className="navbar-text">
                     {user.username}
                 </span>
 

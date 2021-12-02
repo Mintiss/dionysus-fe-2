@@ -7,7 +7,6 @@ export const UserProvider = (props) =>
     const [user, setUser] = useState
     ({
         username: 'Harry99',
-        name: 'Harry',
         token: ''
     });
 
