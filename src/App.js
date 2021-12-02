@@ -3,34 +3,39 @@ import bgImage from './images/background.jpg'
 import NavigationBar from './components/NavigationBar';
 import { Outlet, useLocation } from 'react-router';
 import WelcomeScreen from './components/WelcomeScreen';
-import {UserProvider} from './Contexts/UserContext';
+import { UserProvider } from './Contexts/UserContext';
+import AdminDashboard from './components/AdminDashboard';
+import { LocationContext } from './Contexts/LocationContext';
+import {useContext} from 'react'
 
 const background = {
   backgroundImage: `url(${bgImage})`,
-   backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    width: '100vw',
-    height: '100vh',
-    position: 'absolute',
-    left: "0",
-    overflow: 'auto'
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  width: '100vw',
+  height: '100vh',
+  position: 'absolute',
+  left: "0",
+  overflow: 'auto'
 }
 
 function App() {
-  const location = useLocation({})
+  const {setLocation} = useContext(LocationContext)
 
-  console.log(location.state)
-
+  console.log(LocationContext)
+  
   return (
-    <UserProvider>
-      <div className="App" style={background}>
-        <NavigationBar />
-        {(location.state == null || location.state.menu) && <WelcomeScreen />}
-        <Outlet />
-      </div>
-    </UserProvider>
-    
+    <LocationContext>
+      <UserProvider>
+        <div className="App" style={background}>
+          <NavigationBar />
+          <WelcomeScreen />
+          <Outlet />
+        </div>
+        <AdminDashboard />
+      </UserProvider>
+    </LocationContext>
   );
 }
 

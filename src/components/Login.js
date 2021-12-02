@@ -1,15 +1,15 @@
-import React, {useState, useContext} from 'react';
-
+import {useState, useContext} from 'react';
 import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
-import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom";
-
 import {UserContext} from '../Contexts/UserContext';
+import { LocationContext } from '../Contexts/LocationContext';
+
 const Login = () => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
     const {setUser} = useContext(UserContext);
+    const {setLocation} = useContext(LocationContext)
 
     const navigate = useNavigate()
 
@@ -25,6 +25,7 @@ const Login = () => {
             token: 'pipi'
         }
         setUser(newUser);
+        setLocation({location: 'main'})
         navigate('/', { state: {loggedIn: true, menu:"main"} });
     }
 
