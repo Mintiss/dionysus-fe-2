@@ -1,9 +1,14 @@
+import React, {useState, useContext} from 'react';
+
 import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom";
 
+import {UserContext} from '../Contexts/UserContext';
 const Login = () => {
+    const [user, setUser] = useContext(useContext);
+
     const navigate = useNavigate()
 
     return (
