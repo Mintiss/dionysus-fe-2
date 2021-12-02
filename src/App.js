@@ -3,7 +3,7 @@ import bgImage from './images/background.jpg'
 import NavigationBar from './components/NavigationBar';
 import { Outlet, useLocation } from 'react-router';
 import WelcomeScreen from './components/WelcomeScreen';
-//import {UserProvider} from './Contexts/UserContext';
+import {UserProvider} from './Contexts/UserContext';
 
 const background = {
   backgroundImage: `url(${bgImage})`,
@@ -23,13 +23,13 @@ function App() {
   console.log(location.state)
 
   return (
-    //<UserProvider>
+    <UserProvider>
       <div className="App" style={background}>
-      <NavigationBar />
-      {(location.state == null || location.state.menu) && <WelcomeScreen />}
-      <Outlet />
+        <NavigationBar />
+        {(location.state == null || location.state.menu) && <WelcomeScreen />}
+        <Outlet />
       </div>
-    //</UserProvider>
+    </UserProvider>
     
   );
 }

@@ -1,3 +1,4 @@
+import React, {useState, useContext} from 'react';
 import logo from '../images/dionysus-logo.png'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
@@ -5,8 +6,10 @@ import Nav from 'react-bootstrap/Nav'
 import Alert from 'react-bootstrap/Alert'
 import { Link, useNavigate } from "react-router-dom";
 
+import {UserContext} from '../Contexts/UserContext';
 const NavigationBar = () => {
     const navigate = useNavigate()
+    const {user, setUser} = useContext(UserContext);
     return (
         <Navbar bg="black" expand="lg" variant='dark'>
             <Container className='m-auto w-100'>
@@ -34,6 +37,10 @@ const NavigationBar = () => {
                 <Nav.Link className='text-white' onClick={() => {
                     console.log('ass')
                 }}>Fuck Harry In The Ass</Nav.Link>
+
+                <span class="navbar-text">
+                    {user.username}
+                </span>
 
                 <Nav className="ml-auto">
                     <button onClick={() => {
