@@ -1,28 +1,59 @@
 import {useState, useContext} from 'react';
+import jwt from 'jwt-decode'
 import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { Link, useNavigate } from "react-router-dom";
 import {UserContext} from '../Contexts/UserContext';
-import { LocationContext } from '../Contexts/LocationContext';
-
+import axios from 'axios';
 const Login = () => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
-    const {setUser} = useContext(UserContext);
-    const {setLocation} = useContext(LocationContext)
+    const {user, setUser} = useContext(UserContext);
 
     const navigate = useNavigate()
 
-    const login = e =>
+    const parseJwt = (token) => {
+        if (!token) { return; }
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
+    }
+    const login = async e =>
     {
         e.preventDefault();
-        //send a request and check if's ok
-        console.log("Username: ", username);
-        console.log("Password: ", password);
-        var newUser = {
-            username: username,
-            name: username,
-            token: 'pipi'
+        if(username.trim() !== "" && password.trim() !== "")
+        {
+            var LoginUser = {
+                username: username,
+                password: password
+            }
+            const headers = {
+                'Content-type': 'application/json',
+                "Access-Control-Allow-Origin":"Origin", 
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+                "Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Credentials": "true"
+            }
+            await axios.post(`http://localhost:38085/api/user/login`, LoginUser, {headers: headers})
+            .then(res => {
+                if(res.status === 200)
+                {
+                    //send a request and check if's ok
+                    const decodedToken = jwt(res.data, { payload : true });
+                    console.log("Token: ", decodedToken);
+                    var currentUser = {
+                        username: decodedToken['name'],
+                        token: res.data
+                    }
+                    setUser(currentUser);
+                    console.log("User: ", user);
+                    navigate('/', { state: {loggedIn: true, menu:"main"} });
+                }
+                else
+                {
+                    console.log("Status was not OK");
+                }
+            })
         }
         setUser(newUser);
         setLocation({location: 'main'})
