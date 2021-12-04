@@ -13,17 +13,18 @@ const Login = () => {
     const {user, setUser} = useContext(UserContext);
 
     const navigate = useNavigate()
-
     const login = async e =>
     {
         e.preventDefault();
+        setUser({username: '', token: ''});
+        
         if(username.trim() !== "" && password.trim() !== "")
         {
-            setUser({username: '', token: ''});
             var LoginUser = {
                 username: username,
                 password: password
             }
+            
             const headers = {
                 'Content-type': 'application/json',
                 "Access-Control-Allow-Origin":"Origin", 
@@ -36,23 +37,21 @@ const Login = () => {
                 if(res.status === 200)
                 {
                     //send a request and check if's ok
-                    //const tokenPayload = parseJwt(res.data);
                     const decodedToken = jwt(res.data);
-                    console.log("Token 1: ", decodedToken);
+                    console.log(decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
+                    console.log(decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
                     
-
                     var currentUser = {
-                        username: '',
+                        username: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
                         token: res.data
                     }
                     setUser(currentUser);
-                    console.log("User: ", user);
+                    console.log(user);
                     navigate('/', { state: {loggedIn: true, menu:"main"} });
                 }
-                else
-                {
-                    console.log("Status was not OK");
-                }
+            }).catch(error => {
+                console.log("Status was not OK: " + error.message);
+               
             })
         }
     }
