@@ -14,17 +14,12 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const parseJwt = (token) => {
-        if (!token) { return; }
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    }
     const login = async e =>
     {
         e.preventDefault();
         if(username.trim() !== "" && password.trim() !== "")
         {
+            setUser({username: '', token: ''});
             var LoginUser = {
                 username: username,
                 password: password
@@ -41,10 +36,13 @@ const Login = () => {
                 if(res.status === 200)
                 {
                     //send a request and check if's ok
-                    const decodedToken = jwt(res.data, { payload : true });
-                    console.log("Token: ", decodedToken);
+                    //const tokenPayload = parseJwt(res.data);
+                    const decodedToken = jwt(res.data);
+                    console.log("Token 1: ", decodedToken);
+                    
+
                     var currentUser = {
-                        username: decodedToken['name'],
+                        username: '',
                         token: res.data
                     }
                     setUser(currentUser);
