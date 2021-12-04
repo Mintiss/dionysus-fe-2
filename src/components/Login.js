@@ -32,7 +32,7 @@ const Login = () => {
                 "Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS",
                 "Access-Control-Allow-Credentials": "true"
             }
-            await axios.post(`http://localhost:38085/api/user/login`, LoginUser, {headers: headers})
+            await axios.post(`http://localhost:38085/api/user/login`, {username: username, password: password}, {headers: headers})
             .then(res => {
                 if(res.status === 200)
                 {
