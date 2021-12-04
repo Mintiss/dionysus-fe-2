@@ -39,6 +39,7 @@ const NavigationBar = () => {
                 }}>Fuck Harry In The Ass</Nav.Link>
 
                 <span className="navbar-text">
+                    {user.role}
                     {user.username}
                 </span>
 

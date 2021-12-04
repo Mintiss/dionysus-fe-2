@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom";
 
 import {UserContext} from '../Contexts/UserContext';
-import axios from 'axios';
+import axios from '../axios';
 const Login = () => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
@@ -16,26 +16,17 @@ const Login = () => {
     const login = async e =>
     {
         e.preventDefault();
-        setUser({username: '', token: ''});
+        setUser({username: '', role: ''});
+        localStorage.removeItem('token');
         
         if(username.trim() !== "" && password.trim() !== "")
         {
-            var LoginUser = {
-                username: username,
-                password: password
-            }
             
-            const headers = {
-                'Content-type': 'application/json',
-                "Access-Control-Allow-Origin":"Origin", 
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-                "Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Credentials": "true"
-            }
-            await axios.post(`http://localhost:38085/api/user/login`, {username: username, password: password}, {headers: headers})
+            await axios.post(`/user/login`, {username: username, password: password})
             .then(res => {
                 if(res.status === 200)
                 {
+                    localStorage.setItem('token', res.data)
                     //send a request and check if's ok
                     const decodedToken = jwt(res.data);
                     console.log(decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
@@ -43,7 +34,7 @@ const Login = () => {
                     
                     var currentUser = {
                         username: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
-                        token: res.data
+                        role: decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
                     }
                     setUser(currentUser);
                     console.log(user);
@@ -54,6 +45,13 @@ const Login = () => {
                
             })
         }
+    }
+
+    const logout = async e =>
+    {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        setUser({username: '', role: ''});
     }
 
     return (
@@ -74,9 +72,11 @@ const Login = () => {
                 {/* <Button variant="purple" type="submit">Register</Button> */}
 
                 <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
+                
             </div>
-
+            <button onClick={logout} className='btn text-white bg-purple m-1' >Logout</button>
         </Form>
+        
     )
 }
 
