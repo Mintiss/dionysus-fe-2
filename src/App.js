@@ -3,10 +3,10 @@ import bgImage from './images/background.jpg'
 import NavigationBar from './components/NavigationBar';
 import { Outlet, useLocation } from 'react-router';
 import WelcomeScreen from './components/WelcomeScreen';
-import { UserProvider } from './Contexts/UserContext';
 import AdminDashboard from './components/AdminDashboard';
 import { LocationContext } from './Contexts/LocationContext';
-import {useContext} from 'react'
+import { useContext } from 'react'
+import WineBatchesScreen from './components/WineBatchesScreen';
 
 const background = {
   backgroundImage: `url(${bgImage})`,
@@ -21,21 +21,14 @@ const background = {
 }
 
 function App() {
-  const {setLocation} = useContext(LocationContext)
+  const locationContext = useContext(LocationContext)
 
-  console.log(LocationContext)
-  
   return (
-    <LocationContext>
-      <UserProvider>
-        <div className="App" style={background}>
-          <NavigationBar />
-          <WelcomeScreen />
-          <Outlet />
-        </div>
-        <AdminDashboard />
-      </UserProvider>
-    </LocationContext>
+    <div className="App" style={background}>
+      <NavigationBar />
+      {locationContext.location == 'main' && <WelcomeScreen />}
+      <Outlet />
+    </div>
   );
 }
 

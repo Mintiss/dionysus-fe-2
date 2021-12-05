@@ -3,12 +3,16 @@ import jwt from 'jwt-decode'
 import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { Link, useNavigate } from "react-router-dom";
-import {UserContext} from '../Contexts/UserContext';
+import {UserContext} from '../Contexts/UserContext';    
+import { LocationContext } from '../Contexts/LocationContext';
 import axios from 'axios';
+
 const Login = () => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
     const {user, setUser} = useContext(UserContext);
+    const {setLocation} = useContext(LocationContext)
+
 
     const navigate = useNavigate()
 
@@ -47,7 +51,7 @@ const Login = () => {
                     }
                     setUser(currentUser);
                     console.log("User: ", user);
-                    navigate('/', { state: {loggedIn: true, menu:"main"} });
+                    navigate('/');
                 }
                 else
                 {
@@ -55,9 +59,9 @@ const Login = () => {
                 }
             })
         }
-        setUser(newUser);
-        setLocation({location: 'main'})
-        navigate('/', { state: {loggedIn: true, menu:"main"} });
+        // setUser(newUser);
+        setLocation('main')
+        navigate('/');
     }
 
     return (
@@ -72,15 +76,10 @@ const Login = () => {
                 <Form.Control type="password" placeholder="Password" onChange = {(e) => setPassword(e.target.value)}/>
             </FloatingLabel>
 
-            <div className='custom-checkbox shadow-lg bg-background pt-2 pb-2 rounded shadow w-25 m-auto border '>
-                {/* <Form.Check inline className='text-white' label='Remember me' /> */}
-
-                {/* <Button variant="purple" type="submit">Register</Button> */}
-
-                <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
-            </div>
+            <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
 
         </Form>
+
     )
 }
 
