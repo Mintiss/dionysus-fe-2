@@ -7,7 +7,7 @@ export const UserProvider = (props) =>
     const [user, setUser] = useState
     ({
         username: '',
-        token: ''
+        role: ''
     });
 
     return <UserContext.Provider value = {{user, setUser}}>

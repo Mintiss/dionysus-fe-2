@@ -49,6 +49,7 @@ const NavigationBar = () => {
 
                 <span className="navbar-text">
                     {userContext.username}
+                    {userContext.role}
                 </span>
 
                 {userContext.user.token === '' && <>
