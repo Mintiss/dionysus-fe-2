@@ -1,16 +1,18 @@
-import React, {useState, useContext} from 'react';
+import {useState, useContext} from 'react';
 import jwt from 'jwt-decode'
 import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
-import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom";
+import {UserContext} from '../Contexts/UserContext';    
+import { LocationContext } from '../Contexts/LocationContext';
+import axios from 'axios';
 
-import {UserContext} from '../Contexts/UserContext';
-import axios from '../axios';
 const Login = () => {
     const [username, setUsername] = useState(""); 
     const [password, setPassword] = useState(""); 
     const {user, setUser} = useContext(UserContext);
+    const {setLocation} = useContext(LocationContext)
+
 
     const navigate = useNavigate()
     const login = async e =>
@@ -37,14 +39,17 @@ const Login = () => {
                         role: decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
                     }
                     setUser(currentUser);
-                    console.log(user);
-                    navigate('/', { state: {loggedIn: true, menu:"main"} });
+                    console.log("User: ", user);
+                    navigate('/');
                 }
             }).catch(error => {
                 console.log("Status was not OK: " + error.message);
                
             })
         }
+        // setUser(newUser);
+        setLocation('main')
+        navigate('/');
     }
 
     const logout = async e =>
@@ -66,10 +71,9 @@ const Login = () => {
                 <Form.Control type="password" placeholder="Password" onChange = {(e) => setPassword(e.target.value)}/>
             </FloatingLabel>
 
-            <div className='custom-checkbox shadow-lg bg-background pt-2 pb-2 rounded shadow w-25 m-auto border '>
-                {/* <Form.Check inline className='text-white' label='Remember me' /> */}
+            <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
 
-                {/* <Button variant="purple" type="submit">Register</Button> */}
+            <div className='custom-checkbox shadow-lg bg-background pt-2 pb-2 rounded shadow w-25 m-auto border '>
 
                 <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
                 

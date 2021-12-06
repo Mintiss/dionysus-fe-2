@@ -1,20 +1,25 @@
-import React, {useState, useContext} from 'react';
+import { useContext } from 'react';
 import logo from '../images/dionysus-logo.png'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
-import Alert from 'react-bootstrap/Alert'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { LocationContext } from '../Contexts/LocationContext';
+import { UserContext } from '../Contexts/UserContext';
 
-import {UserContext} from '../Contexts/UserContext';
+
 const NavigationBar = () => {
+    const userContext = useContext(UserContext)
+    const { setLocation } = useContext(LocationContext)
+
+
     const navigate = useNavigate()
-    const {user} = useContext(UserContext);
     return (
         <Navbar bg="black" expand="lg" variant='dark'>
             <Container className='m-auto w-100'>
 
                 <Navbar.Brand onClick={() => {
+                    setLocation('main')
                     navigate('/')
                 }}>
                     <img
@@ -26,33 +31,40 @@ const NavigationBar = () => {
                     />
                 </Navbar.Brand>
 
-                <Nav.Link className='text-white' onClick={() => {
-                    console.log('ass')
-                }}>Dashboard</Nav.Link>
+                {userContext.user.token !== '' && <>
+                    <Nav.Link className='text-white' onClick={() => {
+                        setLocation('wine-batches')
+                        navigate('/wine-batches')
+                    }}>Browse Wine</Nav.Link>
 
-                <Nav.Link className='text-white' onClick={() => {
-                    console.log('ass')
-                }}>Browse Wine</Nav.Link>
-                
-                <Nav.Link className='text-white' onClick={() => {
-                    console.log('ass')
-                }}>Fuck Harry In The Ass</Nav.Link>
+                    <Nav.Link className='text-white' onClick={() => {
+                        console.log('ass')
+                    }}>Something else</Nav.Link>
+
+                    <Nav.Link className='text-white' onClick={() => {
+                        setLocation('admin-dashboard')
+                        navigate('/admin-dashboard')
+                    }}>Admin Dashboard</Nav.Link>
+                </>}
 
                 <span className="navbar-text">
-                    {user.role}
-                    {user.username}
+                    {userContext.username}
+                    {userContext.role}
                 </span>
 
-                <Nav className="ml-auto">
-                    <button onClick={() => {
-                        navigate('/signup', { state: { loggedIn: false, menu: "auth" } })
-                    }} className='btn text-white bg-purple m-1' >Sign Up</button>
+                {userContext.user.token === '' && <>
+                    <Nav className="ml-auto">
+                        <button onClick={() => {
+                            setLocation('signup')
+                            navigate('/signup', { state: { loggedIn: false, menu: "auth" } })
+                        }} className='btn text-white bg-purple m-1' >Sign Up</button>
 
-                    <button onClick={() => {
-                        navigate('/login', { state: { loggedIn: false, menu: "auth" } })
-                    }} className='btn text-white bg-success m-1' >Login</button>
-
-                </Nav>
+                        <button onClick={() => {
+                            setLocation('login')
+                            navigate('/login', { state: { loggedIn: false, menu: "auth" } })
+                        }} className='btn text-white bg-success m-1' >Login</button>
+                    </Nav>
+                </>}
 
             </Container>
         </Navbar>
