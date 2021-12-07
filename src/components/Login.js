@@ -5,7 +5,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { Link, useNavigate } from "react-router-dom";
 import {UserContext} from '../Contexts/UserContext';    
 import { LocationContext } from '../Contexts/LocationContext';
-import axios from 'axios';
+import axios from '../axios';
 
 const Login = () => {
     const [username, setUsername] = useState(""); 
