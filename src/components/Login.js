@@ -19,7 +19,15 @@ const Login = () => {
     {
         e.preventDefault();
         setUser({username: '', role: ''});
-        localStorage.removeItem('token');
+        window.sessionStorage.removeItem('token');
+
+        //remove dis later
+        window.sessionStorage.setItem('token', 'das')
+        setUser({username: 'Billy', role: ' asslicker'});
+        navigate('/main/batches');
+
+        console.log('uctxt after login', user)
+
         
         if(username.trim() !== "" && password.trim() !== "")
         {
@@ -28,7 +36,7 @@ const Login = () => {
             .then(res => {
                 if(res.status === 200)
                 {
-                    localStorage.setItem('token', res.data)
+                    window.sessionStorage.setItem('token', res.data)
                     //send a request and check if's ok
                     const decodedToken = jwt(res.data);
                     console.log(decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
@@ -48,15 +56,8 @@ const Login = () => {
             })
         }
         // setUser(newUser);
-        setLocation('main')
-        navigate('/');
-    }
-
-    const logout = async e =>
-    {
-        e.preventDefault();
-        localStorage.removeItem('token');
-        setUser({username: '', role: ''});
+        // setLocation('main')
+        // navigate('/');
     }
 
     return (
@@ -72,13 +73,6 @@ const Login = () => {
             </FloatingLabel>
 
             <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
-
-            <div className='custom-checkbox shadow-lg bg-background pt-2 pb-2 rounded shadow w-25 m-auto border '>
-
-                <button onClick={login} className='btn text-white bg-purple m-1' >Login</button>
-                
-            </div>
-            <button onClick={logout} className='btn text-white bg-purple m-1' >Logout</button>
         </Form>
         
     )

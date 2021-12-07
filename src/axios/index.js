@@ -6,12 +6,12 @@ let headers = {
     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
     "Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Credentials": "true",
-    "Authorization": `Bearer ${localStorage.getItem('token')}` 
+    "Authorization": `Bearer ${window.sessionStorage.getItem('token')}` 
 };
 
-// if(localStorage.getItem('token'))
+// if(window.sessionStorage.getItem('token'))
 // {
-//     headers.Authorization = `Bearer ${localStorage.getItem('token')}` 
+//     headers.Authorization = `Bearer ${window.sessionStorage.getItem('token')}` 
 // }
 
 export default axios.create({

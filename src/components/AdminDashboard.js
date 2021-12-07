@@ -53,7 +53,7 @@ const AdminDashboard = () => {
                 <Card.Title>Registered users</Card.Title>
                 <Tab.Container defaultActiveKey="#user1">
 
-                    <ListGroup className='w-75 m-auto'>
+                    <ListGroup className='w-75 m-auto border'>
 
                         {userList.map(user => {
                             const href = `#user${userList.findIndex(x => x.username === user.username) + 1}`

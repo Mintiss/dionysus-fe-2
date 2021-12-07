@@ -9,18 +9,27 @@ import { UserContext } from '../Contexts/UserContext';
 
 
 const NavigationBar = () => {
-    const userContext = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+
     const { setLocation } = useContext(LocationContext)
 
-
+    console.log('lstorage', window.sessionStorage.getItem('token'))
     const navigate = useNavigate()
+
+
+    const logout = async e => {
+        e.preventDefault();
+        window.sessionStorage.removeItem('token');
+        setUser({ username: '', role: '' });
+        navigate('/')
+    }
+
     return (
         <Navbar bg="black" expand="lg" variant='dark'>
             <Container className='m-auto w-100'>
 
                 <Navbar.Brand onClick={() => {
-                    setLocation('main')
-                    navigate('/')
+                    navigate('/main')
                 }}>
                     <img
                         src={logo}
@@ -31,40 +40,28 @@ const NavigationBar = () => {
                     />
                 </Navbar.Brand>
 
-                {userContext.user.token !== '' && <>
+                {user.username !== '' && <>
                     <Nav.Link className='text-white' onClick={() => {
-                        setLocation('wine-batches')
-                        navigate('/wine-batches')
+                        navigate('/main/batches')
                     }}>Browse Wine</Nav.Link>
 
                     <Nav.Link className='text-white' onClick={() => {
-                        console.log('ass')
-                    }}>Something else</Nav.Link>
+                        navigate('/main/create-batch')
+                    }}>Create Batch</Nav.Link>
 
                     <Nav.Link className='text-white' onClick={() => {
-                        setLocation('admin-dashboard')
-                        navigate('/admin-dashboard')
+                        navigate('/main/admin-dashboard')
                     }}>Admin Dashboard</Nav.Link>
                 </>}
 
                 <span className="navbar-text">
-                    {userContext.username}
-                    {userContext.role}
+                    {user.username}
+                    {user.role}
                 </span>
 
-                {userContext.user.token === '' && <>
-                    <Nav className="ml-auto">
-                        <button onClick={() => {
-                            setLocation('signup')
-                            navigate('/signup', { state: { loggedIn: false, menu: "auth" } })
-                        }} className='btn text-white bg-purple m-1' >Sign Up</button>
 
-                        <button onClick={() => {
-                            setLocation('login')
-                            navigate('/login', { state: { loggedIn: false, menu: "auth" } })
-                        }} className='btn text-white bg-success m-1' >Login</button>
-                    </Nav>
-                </>}
+                {user.username !== '' && <button onClick={logout} className='btn text-white bg-purple m-1' >Logout</button>}
+
 
             </Container>
         </Navbar>
