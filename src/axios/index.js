@@ -9,12 +9,9 @@ let headers = {
     "Authorization": `Bearer ${window.sessionStorage.getItem('token')}` 
 };
 
-// if(window.sessionStorage.getItem('token'))
-// {
-//     headers.Authorization = `Bearer ${window.sessionStorage.getItem('token')}` 
-// }
-
 export default axios.create({
     baseURL: 'http://localhost:38085/api',
     headers: headers
 })
+
+    

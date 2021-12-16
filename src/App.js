@@ -1,15 +1,6 @@
 import bgImage from './images/background.jpg'
 import NavigationBar from './components/NavigationBar';
-import { Outlet, useLocation } from 'react-router';
-import WelcomeScreen from './components/WelcomeScreen';
-import AdminDashboard from './components/AdminDashboard';
-import { LocationContext } from './Contexts/LocationContext';
-import { useContext, useState } from 'react'
-import WineBatchesScreen from './components/WineBatchesScreen';
-import Authenticator from './components/Authenticator';
-import { UserContext } from './Contexts/UserContext';
-import MainLayout from './components/MainLayout';
-import { Navigate } from 'react-router-dom'
+import { Outlet } from 'react-router';
 
 
 const background = {
@@ -25,10 +16,7 @@ const background = {
   textAlign: 'center'
 }
 
-function App({page}) {
-  const {user} = useContext(UserContext)
-  const [currentPage] = useState(page)
-
+function App() {
   return (
     <div style={background}>
       <NavigationBar />

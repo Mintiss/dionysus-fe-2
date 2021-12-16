@@ -4,8 +4,7 @@ import Login from './Login'
 import Signup from './Signup'
 import { useState } from 'react'
 import bgImage from '../images/background.jpg'
-import NavigationBar from '../components/NavigationBar';
-import { Outlet } from 'react-router';
+import Chart from './Chart'
 
 const background = {
     backgroundImage: `url(${bgImage})`,
@@ -36,6 +35,7 @@ const Authenticator = () => {
                     {menu === 'Register' && <span>Alreay have an account? <u onClick={() => setMenu('Login')}>Log in</u></span>}
                 </Card.Body>
             </Card >
+
         </div>
 
     )

@@ -4,17 +4,13 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import { useNavigate } from "react-router-dom";
-import { LocationContext } from '../Contexts/LocationContext';
 import { UserContext } from '../Contexts/UserContext';
+import Notifications from './Notifications';
 
 
 const NavigationBar = () => {
     const { user, setUser } = useContext(UserContext)
-
-    const { setLocation } = useContext(LocationContext)
-
-    console.log('lstorage', window.sessionStorage.getItem('token'))
-    const navigate = useNavigate()
+    const navigate = useNavigate() 
 
 
     const logout = async e => {
@@ -29,7 +25,7 @@ const NavigationBar = () => {
             <Container className='m-auto w-100'>
 
                 <Navbar.Brand onClick={() => {
-                    navigate('/main')
+                    navigate('/main/batches')
                 }}>
                     <img
                         src={logo}
@@ -40,27 +36,26 @@ const NavigationBar = () => {
                     />
                 </Navbar.Brand>
 
-                {user.username !== '' && <>
+                {user.role === 'Winemaker' && <Notifications />}
+
+                {window.sessionStorage.getItem('token') !== null && <>
                     <Nav.Link className='text-white' onClick={() => {
                         navigate('/main/batches')
                     }}>Browse Wine</Nav.Link>
 
-                    <Nav.Link className='text-white' onClick={() => {
+                    {(user.role === 'Winemaker' || user.role === 'Administrator') &&<Nav.Link className='text-white' onClick={() => {
                         navigate('/main/create-batch')
-                    }}>Create Batch</Nav.Link>
+                    }}>Create Batch</Nav.Link>}
 
-                    <Nav.Link className='text-white' onClick={() => {
+                    {user.role === 'Administrator' && <Nav.Link className='text-white' onClick={() => {
                         navigate('/main/admin-dashboard')
-                    }}>Admin Dashboard</Nav.Link>
+                    }}>Admin Dashboard</Nav.Link>}
                 </>}
 
-                <span className="navbar-text">
-                    {user.username}
-                    {user.role}
-                </span>
+                <span className="navbar-text">{user.username} {user.role}</span>
 
 
-                {user.username !== '' && <button onClick={logout} className='btn text-white bg-purple m-1' >Logout</button>}
+                {window.sessionStorage.getItem('token') !== null && <button onClick={logout} className='btn text-white bg-purple m-1' >Logout</button>}
 
 
             </Container>
