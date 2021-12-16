@@ -6,15 +6,12 @@ let headers = {
     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
     "Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Credentials": "true",
-    "Authorization": `Bearer ${localStorage.getItem('token')}` 
+    "Authorization": `Bearer ${window.sessionStorage.getItem('token')}` 
 };
-
-// if(localStorage.getItem('token'))
-// {
-//     headers.Authorization = `Bearer ${localStorage.getItem('token')}` 
-// }
 
 export default axios.create({
     baseURL: 'http://localhost:38085/api',
     headers: headers
 })
+
+    

@@ -1,57 +1,75 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
-import {useNavigate} from "react-router-dom";
-import { LocationContext } from '../Contexts/LocationContext';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from '../Contexts/UserContext';
+import jwt from 'jwt-decode'
+import axios from '../axios'
 
-
-import {UserContext} from '../Contexts/UserContext';
 const Signup = () => {
-    const {setLocation} = useContext(LocationContext)
     const navigate = useNavigate()
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [repeatedPassword, setRepeatedPassword] = useState("");
+    const {user, setUser} = useContext(UserContext);
 
-    const {setUser} = useContext(UserContext);
 
-    const [username, setUsername] = useState(""); 
-    const [password, setPassword] = useState(""); 
-    const [email, setEmail] = useState(""); 
-    const [repeatedPassword, setRepeatedPassword] = useState(""); 
-
-    const Register = e =>
-    {
+    const Register = async e => {
         e.preventDefault();
+        if (username === '' || typeof username !== 'string')
+            return alert('Username invalid')
+        if (password === '' || typeof password !== 'string')
+            return alert('Password invalid')
+        if (name === '' || typeof name !== 'string')
+            return alert('Email invalid')
+        if (repeatedPassword === '' || typeof repeatedPassword !== 'string')
+            return alert('Repeated password invalid')
+        if(password !== repeatedPassword) 
+            return alert('Passwords must match')
+
         //send a request and check if's ok
-        console.log("Username: ", username);
-        console.log("Password", password);
-        console.log("Repeated password", repeatedPassword);
-        console.log("Email", email);
-        var newUser = {
-            username: username,
-            name: username,
-            token: 'pipi'
-        }
-        setUser(newUser);
-        setLocation('main')
-        navigate('/');
+
+        await axios.post(`/user/register`, {name: name, username: username, password: password})
+            .then(res => {
+                if(res.status === 200)
+                {
+                    window.sessionStorage.setItem('token', res.data)
+                    //send a request and check if's ok
+                    const decodedToken = jwt(res.data);
+                    console.log(decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
+                    console.log(decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+                    
+                    var currentUser = {
+                        username: decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+                        role: decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+                    }
+                    setUser(currentUser);
+                    console.log("User: ", user);
+                    navigate('/main/batches');
+                }
+            }).catch(error => {
+                alert('Register failed', error.message)
+            })
     }
 
     return (
         <Form className='w-50 m-auto p-5'>
 
             <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
-                <Form.Control type="text"  onChange = {(e) => setUsername(e.target.value)}/>
+                <Form.Control type="text" onChange={(e) => setUsername(e.target.value)} />
             </FloatingLabel>
 
-            <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-                <Form.Control type="email" onChange = {(e) => setEmail(e.target.value)}/>
+            <FloatingLabel controlId="floatingInput" label="Name" className="mb-3">
+                <Form.Control type="text" onChange={(e) => setName(e.target.value)} />
             </FloatingLabel>
 
             <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
-                <Form.Control type="password" onChange = {(e) => setPassword(e.target.value)}/>
+                <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
             </FloatingLabel>
 
             <FloatingLabel controlId="floatingPassword" label="Repeat Password" className="mb-3">
-                <Form.Control type="password" onChange = {(e) => setRepeatedPassword(e.target.value)}/>
+                <Form.Control type="password" onChange={(e) => setRepeatedPassword(e.target.value)} />
             </FloatingLabel>
 
             <button onClick={Register} className='btn text-white bg-purple m-1' >Register</button>

@@ -16,4 +16,10 @@ $theme-colors: (
   "background": #212121
 );
 
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
 @import '../node_modules/bootstrap/scss/bootstrap.scss';

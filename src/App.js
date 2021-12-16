@@ -1,12 +1,7 @@
-import './App.css';
 import bgImage from './images/background.jpg'
 import NavigationBar from './components/NavigationBar';
-import { Outlet, useLocation } from 'react-router';
-import WelcomeScreen from './components/WelcomeScreen';
-import AdminDashboard from './components/AdminDashboard';
-import { LocationContext } from './Contexts/LocationContext';
-import { useContext } from 'react'
-import WineBatchesScreen from './components/WineBatchesScreen';
+import { Outlet } from 'react-router';
+
 
 const background = {
   backgroundImage: `url(${bgImage})`,
@@ -17,16 +12,14 @@ const background = {
   height: '100vh',
   position: 'absolute',
   left: "0",
-  overflow: 'auto'
+  overflow: 'auto',
+  textAlign: 'center'
 }
 
 function App() {
-  const locationContext = useContext(LocationContext)
-
   return (
-    <div className="App" style={background}>
+    <div style={background}>
       <NavigationBar />
-      {locationContext.location == 'main' && <WelcomeScreen />}
       <Outlet />
     </div>
   );
