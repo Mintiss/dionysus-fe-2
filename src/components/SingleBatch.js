@@ -8,6 +8,7 @@ import { useEffect, useState, useContext } from 'react'
 import axios from '../axios'
 import ReadingCharts from './ReadingCharts'
 import { UserContext } from '../Contexts/UserContext';
+import AvarageReadings from './AvarageReadings'
 
 
 const SingleBatch = () => {
@@ -41,9 +42,10 @@ const SingleBatch = () => {
             <Card.Header className='h4'>Wine batch ID: {params.batch_id}</Card.Header>
             <Card.Body>
                 {apiCallDone && <BatchDetails batch={batch} />}
-                {(apiCallDone && user.role === 'Winemaker') && <ReadingCharts batchId={params.batch_id} />}                
-                {user.role === 'Winemaker' && <BatchDashboard batchId={params.batch_id} />}
-                {user.role === 'Sommelier' && <StarRating batchId={batch.batchId} />}
+                {(apiCallDone && (user.role === 'Winemaker' || user.role === 'Administrator')) && <ReadingCharts batchId={params.batch_id} />}                
+                {(user.role === 'Winemaker' || user.role === 'Administrator') && <BatchDashboard batchId={params.batch_id} />}
+                {(user.role === 'Winemaker' || user.role === 'Administrator' || user.role === 'Sommelier') && <AvarageReadings batchId={params.batch_id} />}
+                {(user.role === 'Winemaker' || user.role === 'Administrator') && <StarRating batchId={batch.batchId} />}
                 {apiCallDone && <Reviews ratings={batch.ratings} />}
                 
             </Card.Body>

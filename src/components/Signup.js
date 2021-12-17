@@ -22,7 +22,7 @@ const Signup = () => {
         if (password === '' || typeof password !== 'string')
             return alert('Password invalid')
         if (name === '' || typeof name !== 'string')
-            return alert('Email invalid')
+            return alert('Name invalid')
         if (repeatedPassword === '' || typeof repeatedPassword !== 'string')
             return alert('Repeated password invalid')
         if(password !== repeatedPassword) 
@@ -48,8 +48,8 @@ const Signup = () => {
                     console.log("User: ", user);
                     navigate('/main/batches');
                 }
-            }).catch(error => {
-                alert('Register failed', error.message)
+            }).catch(() => {
+                alert('Register failed, username taken')
             })
     }
 
@@ -57,19 +57,19 @@ const Signup = () => {
         <Form className='w-50 m-auto p-5'>
 
             <FloatingLabel controlId="floatingInput" label="Username" className="mb-3">
-                <Form.Control type="text" onChange={(e) => setUsername(e.target.value)} />
+                <Form.Control className='bg-dark' type="text" onChange={(e) => setUsername(e.target.value)} />
             </FloatingLabel>
 
             <FloatingLabel controlId="floatingInput" label="Name" className="mb-3">
-                <Form.Control type="text" onChange={(e) => setName(e.target.value)} />
+                <Form.Control className='bg-dark' type="text" onChange={(e) => setName(e.target.value)} />
             </FloatingLabel>
 
             <FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
-                <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
+                <Form.Control className='bg-dark' type="password" onChange={(e) => setPassword(e.target.value)} />
             </FloatingLabel>
 
             <FloatingLabel controlId="floatingPassword" label="Repeat Password" className="mb-3">
-                <Form.Control type="password" onChange={(e) => setRepeatedPassword(e.target.value)} />
+                <Form.Control className='bg-dark' type="password" onChange={(e) => setRepeatedPassword(e.target.value)} />
             </FloatingLabel>
 
             <button onClick={Register} className='btn text-white bg-purple m-1' >Register</button>

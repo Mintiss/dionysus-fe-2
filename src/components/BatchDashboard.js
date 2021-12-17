@@ -63,11 +63,11 @@ const BatchDashboard = ({ batchId }) => {
 
     const updateValues = async () => {
         if (!autoAjustTemp) {
-            if (tempTarget === '' || typeof tempTarget !== 'number') return alert('Temperature target invalid')
+            if (tempTarget === '' && typeof tempTarget === 'number') return alert('Temperature target invalid')
             await axios.put(`/Batch/SetTemperatureTarget`,
                 {
                     temperatureTarget: parseInt(tempTarget),
-                    batchId: parseInt(batchId) 
+                    batchId: parseInt(batchId)
                 })
                 .then(res => {
                     if (res.status === 200) {
@@ -79,11 +79,11 @@ const BatchDashboard = ({ batchId }) => {
                 })
         }
         if (!autoAjustHum) {
-            if (humTarget === '' || typeof humTarget !== 'number') return alert('Invalid hum target')
+            if (humTarget === '' && typeof humTarget === 'number') return alert('Invalid hum target')
             await axios.put(`/Batch/SetHumidityTarget`,
                 {
                     humidityTarget: parseInt(humTarget),
-                    batchId: batchId 
+                    batchId: batchId
                 })
                 .then(res => {
                     if (res.status === 200) {
@@ -132,7 +132,7 @@ const BatchDashboard = ({ batchId }) => {
 
     return (
         <Card className='bg-background m-auto mt-5 border'>
-            <Card.Header className='h4'>Ajust batch conditions</Card.Header>
+            <Card.Header className='h4'>Adjust batch conditions</Card.Header>
             <Card.Body>
                 <Row className="g-2 mb-1">
                     <Col>Target Temperature</Col>
@@ -152,7 +152,14 @@ const BatchDashboard = ({ batchId }) => {
                         </InputGroup>
                     </Col>
                 </Row>
-                <span>Automatic Ajustment</span>
+                <Row>
+                    <Col>
+                        <span>Automatic Adjustment Temperature</span>
+                    </Col>
+                    <Col>
+                    <span>Automatic Adjustment Humidity</span>
+                    </Col>
+                </Row>
                 <Row className='g-2 mt-2'>
                     <Col>
                         <BootstrapSwitchButton

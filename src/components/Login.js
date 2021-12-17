@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form"
 import FloatingLabel from "react-bootstrap/FloatingLabel"
 import { useNavigate } from "react-router-dom";
 import {UserContext} from '../Contexts/UserContext';    
-import { LocationContext } from '../Contexts/LocationContext';
 import axios from '../axios';
 
 const Login = () => {

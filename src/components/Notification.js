@@ -26,6 +26,9 @@ const Notification = ({ notification }) => {
                 <Col className='m-1'>
                     Humidity - Reading: {notification.humidityReading} Target: {notification.humidityTarget}
                 </Col>
+                <Col className='m-1'>
+                    Date - {(notification.postedOn).substring(0,10)} {(notification.postedOn).substring(11,19)} 
+                </Col>
                 <Col>
                     <button className='btn btn-purple m-1 align-self-center' onClick={resolveNotification}>Mark as resolved</button>
                 </Col>

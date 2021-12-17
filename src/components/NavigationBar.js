@@ -36,7 +36,7 @@ const NavigationBar = () => {
                     />
                 </Navbar.Brand>
 
-                {user.role === 'Winemaker' && <Notifications />}
+                {(user.role === 'Winemaker' || user.role === 'Administrator') && <Notifications />}
 
                 {window.sessionStorage.getItem('token') !== null && <>
                     <Nav.Link className='text-white' onClick={() => {

@@ -37,7 +37,7 @@ const BatchDetails = ({ batch }) => {
                                 <span>Target Humidity</span>
                             </Col>
                             <Col>
-                                <span>{batch.targetHumidity}</span>
+                                <span>{batch.targetHumidity} %</span>
                             </Col>
                         </Row></ListGroup.Item>
                     <ListGroup.Item className='text-white bg-dark border'>
@@ -46,7 +46,7 @@ const BatchDetails = ({ batch }) => {
                                 <span>Target Temperature</span>
                             </Col>
                             <Col>
-                                <span>{batch.targetTemperature}</span>
+                                <span>{batch.targetTemperature} °C</span>
                             </Col>
                         </Row></ListGroup.Item>
                     <ListGroup.Item className='text-white bg-dark border'>
